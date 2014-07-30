@@ -1,0 +1,22 @@
+[credential]
+	helper = cache
+	helper = cache
+	helper = cache
+	helper = cache
+[user]
+	name = tarukosu
+	email = u.au.sky.future12@gmail.com
+[color]
+	ui = auto
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+	hist = log --pretty=format:\\\"%h %ad | %s%d [%an]\\\" --graph --date=short
+[core]
+	excludesfile = ~/.gitignore
+[merge]
+	ff = false
+[http]
+	sslVerify = false
