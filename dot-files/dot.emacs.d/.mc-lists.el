@@ -10,6 +10,7 @@
       '(
 	backward-delete-char
 	c-electric-semi&comma
+	indent-for-tab-command
 	python-backspace
 	python-electric-colon
 	))
