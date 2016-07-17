@@ -152,5 +152,22 @@ if [ -f ~/Applications/enhancd/enhancd.sh ]; then
     source ~/Applications/enhancd/enhancd.sh
 fi
 
-export PATH=${PATH}:~/Applications/peco_linux_amd64
-alias rakuten='python ~/Dropbox/pointClick/rakuten.py'
+alias capy='(){cat $1|xsel --input --clipboard}'
+
+export HOSTNAME=$(cat /etc/hostname)
+
+case "$HOSTNAME" in
+     "espeon" ) export PATH=${PATH}:~/Applications/peco_linux_amd64
+     	        alias rakuten='python ~/Dropbox/pointClick/rakuten.py'
+		export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
+
+		#alias -g @c='|xsel --clipboard --input'
+		export NVM_DIR="/home/furuta/.nvm"
+		[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+		source ~/ros/indigo/devel/setup.zsh
+
+		export NLOPT_INCLUDE_DIR=/home/furuta/ros/hydro/src/jsk-ros-pkg/jsk_common/3rdparty/nlopt/include;;
+
+esac
+
