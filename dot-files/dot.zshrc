@@ -144,6 +144,8 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
+
+[[ $EMACS = t ]] && unsetopt zle
 ##################もしかして##############################
 
 
@@ -154,6 +156,39 @@ fi
 
 alias capy='(){cat $1|xsel --input --clipboard}'
 
+
+################################
+# notify command
+################################
+local COMMAND=""
+local COMMAND_TIME=""
+precmd() {
+    if [ "$COMMAND_TIME" -ne "0" ] ; then
+        local d=`date +%s`
+        d=`expr $d - $COMMAND_TIME`
+        if [ "$d" -ge "1" ] ; then
+	   COMMAND="$COMMAND "
+	   notify-send -i /usr/share/icons/application-default-icon.png "${${(s: :)COMMAND}[1]}" "${COMMAND}"
+	fi
+    fi
+    COMMAND="0"
+    COMMAND_TIME="0"
+}
+preexec () {
+    COMMAND="${1}"
+    COMMAND_TIME=`date +%s`
+}
+
+
+###################
+# anaconda
+###################
+#export PATH=/home/yusuke/anaconda3/bin:$PATH
+
+
+############################
+# each machine setup
+############################
 export HOSTNAME=$(cat /etc/hostname)
 
 case "$HOSTNAME" in
@@ -168,6 +203,11 @@ case "$HOSTNAME" in
 		source ~/ros/indigo/devel/setup.zsh
 
 		export NLOPT_INCLUDE_DIR=/home/furuta/ros/hydro/src/jsk-ros-pkg/jsk_common/3rdparty/nlopt/include;;
-
+    "sylveon" ) # cuda setting
+    	        export PATH=${PATH}:/usr/local/cuda-8.0/bin:/usr/lib/nvidia-367/bin
+		export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64:/usr/lib32/nvidia-367:/usr/lib/nvidia-367
+		export CUDA_HOME=/usr/local/cuda
+		source ~/ros/kinetic/devel/setup.zsh
+		#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib:/usr/local/lib
+		export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/yusuke/lib/opencv2.4.13
 esac
-
